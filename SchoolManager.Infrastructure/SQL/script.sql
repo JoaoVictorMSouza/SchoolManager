@@ -10,7 +10,8 @@ CREATE TABLE "ALUNO"(
     "id" INT NOT NULL,
     "nome" VARCHAR(255) NOT NULL,
     "usuario" VARCHAR(45) NOT NULL,
-    "senha" CHAR(60) NOT NULL
+    "senha" CHAR(60) NOT NULL,
+    "inativo" TINYINT NOT NULL
 );
 ALTER TABLE
     "ALUNO" ADD CONSTRAINT "aluno_id_primary" PRIMARY KEY("id");
@@ -20,7 +21,8 @@ CREATE TABLE "TURMA"(
     "id" INT NOT NULL,
     "curso_id" INT NOT NULL,
     "turma" VARCHAR(45) NOT NULL,
-    "ano" INT NOT NULL
+    "ano" INT NOT NULL,
+    "inativo" TINYINT NOT NULL
 );
 ALTER TABLE
     "TURMA" ADD CONSTRAINT "turma_id_primary" PRIMARY KEY("id");
@@ -28,7 +30,8 @@ ALTER TABLE
 
 CREATE TABLE "ALUNO_TURMA"(
     "aluno_id" INT NOT NULL,
-    "turma_id" INT NOT NULL
+    "turma_id" INT NOT NULL,
+    "inativo" TINYINT NOT NULL
 );
 ALTER TABLE
     "ALUNO_TURMA" ADD CONSTRAINT "aluno_turma_aluno_id_primary" PRIMARY KEY("aluno_id");

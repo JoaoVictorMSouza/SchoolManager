@@ -11,6 +11,6 @@ namespace SchoolManager.Domain.Interface.Base
         Task<int> Insert(T entity);
 
         Task<bool> Update(T entity);
-        Task<List<T>> GetAll();
+        Task<IEnumerable<T>> GetAll();
     }
 }

@@ -6,5 +6,6 @@
         public Aluno Aluno { get; set; }
         public int TurmaId { get; set; }
         public Turma Turma { get; set; }
+        public bool inativo { get; set; }
     }
 }

@@ -1,0 +1,48 @@
+﻿@model SchoolManager.Domain.Entities.Aluno
+
+@{
+    ViewData["Title"] = "CreateAluno";
+}
+
+<h1>Inserir Aluno</h1>
+
+<h4>Aluno</h4>
+<hr />
+<div class="row mb-3">
+    <div class="col-md-4">
+        <form asp-action="CreateAluno">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nome" class="control-label text-capitalize"></label>
+                <input asp-for="nome" class="form-control" />
+                <span asp-validation-for="nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="usuario" class="control-label text-capitalize"></label>
+                <input asp-for="usuario" class="form-control" />
+                <span asp-validation-for="usuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="senha" class="control-label text-capitalize"></label>
+                <input asp-for="senha" class="form-control" />
+                <span asp-validation-for="senha" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check d-none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="inativo" type="hidden" value="true" /> @Html.DisplayNameFor(model => model.inativo)
+                </label>
+            </div>
+            <div class="form-group mt-4">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListAluno">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -13,7 +13,7 @@ namespace SchoolManager.Infrastructure.Repositories
             _connectionString = configuration.GetConnectionString("Connection")!;
         }
 
-        public Task<List<Aluno>> GetAll()
+        public Task<IEnumerable<Aluno>> GetAll()
         {
             throw new NotImplementedException();
         }

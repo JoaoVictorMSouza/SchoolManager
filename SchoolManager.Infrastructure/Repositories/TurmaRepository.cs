@@ -13,7 +13,7 @@ namespace SchoolManager.Infrastructure.Repositories
             _connectionString = configuration.GetConnectionString("Connection")!;
         }
 
-        public Task<List<Turma>> GetAll()
+        public Task<IEnumerable<Turma>> GetAll()
         {
             throw new NotImplementedException();
         }

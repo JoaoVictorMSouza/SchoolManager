@@ -7,5 +7,6 @@ namespace SchoolManager.Domain.Entities
         public string cursoId { get; set; }
         public string turma { get; set; }
         public int ano { get; set; }
+        public bool inativo { get; set; }
     }
 }

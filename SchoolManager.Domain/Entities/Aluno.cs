@@ -7,5 +7,6 @@ namespace SchoolManager.Domain.Entities
         public string nome { get; set; }
         public string usuario { get; set; }
         public string senha { get; set; }
+        public bool inativo { get; set; }
     }
 }
