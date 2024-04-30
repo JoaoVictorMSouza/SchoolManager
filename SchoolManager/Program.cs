@@ -1,11 +1,15 @@
-var builder = WebApplication.CreateBuilder(args);
+using SchoolManager.Application;
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+IServiceCollection services = builder.Services;
+
+services.AddControllersWithViews();
+
+//Registrando os serviços
+services.ApiRegister();
 
 var app = builder.Build();
-
-app.ApiRegister();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
