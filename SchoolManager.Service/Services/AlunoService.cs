@@ -1,6 +1,7 @@
 ﻿using SchoolManager.Domain.Entities;
 using SchoolManager.Domain.Entities.Exception;
 using SchoolManager.Domain.Interface.Repository;
+using SchoolManager.Domain.Utils;
 
 namespace SchoolManager.Service.Services
 {
@@ -29,18 +30,27 @@ namespace SchoolManager.Service.Services
 
         public async Task<int> CreateAluno(Aluno entity)
         {
+            entity.IsPasswordStrong();
+            entity.SetPassword(new PasswordHasher());
             return await _alunoRepository.Insert(entity);
         }
 
         public async Task<List<Aluno>> GetAllAluno()
         {
             IEnumerable<Aluno> alunos = await _alunoRepository.GetAll();
-            return alunos.ToList();
+
+            List<Aluno> alunosList = alunos.ToList();
+
+            alunosList.ForEach(x => x.Senha = x.Senha.MaskString());
+
+            return alunosList;
         }
 
         public async Task<Aluno> GetById(int id)
         {
-            return await _alunoRepository.GetById(id);
+            Aluno aluno = await _alunoRepository.GetById(id);
+            aluno.Senha = aluno.Senha.MaskString();
+            return aluno;
         }
 
         public async Task<bool> InactivateAlunoById(int id)
@@ -58,12 +68,16 @@ namespace SchoolManager.Service.Services
 
         public async Task<bool> UpdateAluno(Aluno entity)
         {
-            Aluno aluno = await _alunoRepository.GetById(entity.Id);
+            Aluno aluno = await _alunoRepository.GetByIdWithPassword(entity.Id);
 
             if (aluno == null)
             {
                 throw new CustomException("Aluno não encontrado");
             }
+
+            entity.IsPasswordStrong();
+
+            aluno.CheckPassword(entity.Senha, new PasswordHasher());
 
             entity.Id = aluno.Id;
             entity.Inativo = entity.Inativo;

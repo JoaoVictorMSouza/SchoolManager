@@ -34,7 +34,7 @@ namespace SchoolManager.Infrastructure.Repositories
                     Id = item.id,
                     Nome = item.nome,
                     Usuario = item.usuario,
-                    Senha = item.senha,
+                    Senha = "",
                     Inativo = item.inativo != 0
                 });
             };
@@ -43,6 +43,38 @@ namespace SchoolManager.Infrastructure.Repositories
         }
 
         public async Task<Aluno> GetById(int id)
+        {
+            Aluno aluno;
+
+            var prm = new DynamicParameters();
+            prm.Add("@id", id);
+
+            using (var con = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                    SELECT
+                        *
+                    FROM ALUNO
+                    WHERE
+                        id = @id;
+                ";
+
+                var result = await con.QueryAsync<dynamic>(query, prm);
+
+                aluno = result.Select(item => new Aluno
+                {
+                    Id = item.id,
+                    Nome = item.nome,
+                    Usuario = item.usuario,
+                    Senha = "",
+                    Inativo = item.inativo != 0
+                }).FirstOrDefault()!;
+            };
+
+            return aluno;
+        }
+
+        public async Task<Aluno> GetByIdWithPassword(int id)
         {
             Aluno aluno;
 
@@ -112,7 +144,6 @@ namespace SchoolManager.Infrastructure.Repositories
             prm.Add("@id", entity.Id);
             prm.Add("@nome", entity.Nome);
             prm.Add("@usuario", entity.Usuario);
-            prm.Add("@senha", entity.Senha);
             prm.Add("@inativo", entity.Inativo);
 
             using (var con = new SqlConnection(_connectionString))
@@ -122,7 +153,6 @@ namespace SchoolManager.Infrastructure.Repositories
                     SET
                         nome = @nome,
                         usuario = @usuario,
-                        senha = @senha,
                         inativo = @inativo
                     WHERE
                         id = @id;
