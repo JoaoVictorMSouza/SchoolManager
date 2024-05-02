@@ -1,0 +1,73 @@
+﻿@model SchoolManager.Domain.Entities.Aluno
+
+@{
+    ViewData["Title"] = "InativarAluno";
+}
+
+<h1>Inativar aluno</h1>
+
+<hr />
+<div class="row w-100">
+    <div>
+        <p>Deseja realmente inativar esse registro?</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Usuario)
+
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Senha)
+
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Id)
+
+                        </p>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Model.Nome
+                    </td>
+                    <td>
+                        @Model.Usuario
+                    </td>
+                    <td>
+                        @Model.Senha
+                    </td>
+                    <td>
+                        @Model.Id
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex">
+            <form asp-action="InactivateAluno" asp-controller="Aluno" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-danger">Inativar</button>
+            </form>
+            <div class="mx-2">
+                <a class="btn btn-primary" asp-action="ListAluno" asp-controller="Aluno">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

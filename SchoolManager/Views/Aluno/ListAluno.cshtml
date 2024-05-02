@@ -5,7 +5,7 @@
     ViewData["Title"] = "ListAluno";
 }
 
-<h1>Consulta de Alunos</h1>
+<h1>Consulta de alunos</h1>
 
 <p>
     <a asp-action="CreateAlunoView">Inserir aluno</a>
@@ -33,11 +33,6 @@
                     @Html.DisplayNameFor(model => model.Senha)
                 </p>
             </th>
-            <th>
-                <p class="text-capitalize">
-                    @Html.DisplayNameFor(model => model.Inativo)
-                </p>
-            </th>
 
             <th></th>
         </tr>
@@ -45,6 +40,9 @@
     <tbody>
 @foreach (Aluno item in Model) {
         <tr>
+            <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
@@ -54,17 +52,22 @@
             <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
                 @Html.DisplayFor(modelItem => item.Senha)
             </td>
-            <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
-                @Html.DisplayFor(modelItem => item.Inativo)
-            </td>
-            <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+                @if (!item.Inativo)
+                {
+                    <td>
+                        @Html.ActionLink("Editar", "UpdateAlunoView", new { id = item.Id }) |
+                        @Html.ActionLink("Inativar", "InactivateAlunoView", new { id = item.Id })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <form asp-action="ActivateAluno" asp-controller="Aluno" method="post">
+                            <input type="hidden" name="id" value="@item.Id" asp-route-id="@item.Id" />
+                            <button type="submit" class="btn btn-primary">Ativar</button>
+                        </form>
+                    </td>
+                }
         </tr>
 }
     </tbody>

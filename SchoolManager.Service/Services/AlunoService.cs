@@ -1,4 +1,5 @@
 ﻿using SchoolManager.Domain.Entities;
+using SchoolManager.Domain.Entities.Exception;
 using SchoolManager.Domain.Interface.Repository;
 
 namespace SchoolManager.Service.Services
@@ -11,24 +12,63 @@ namespace SchoolManager.Service.Services
         {
             _alunoRepository = alunoRepository;
         }
-        public Task<int> CreateAluno(Aluno entity)
+
+        public async Task<bool> ActivateAlunoById(int id)
         {
-            throw new NotImplementedException();
+            Aluno aluno = await _alunoRepository.GetById(id);
+
+            if (aluno == null)
+            {
+                throw new CustomException("Aluno não encontrado");
+            }
+
+            aluno.Activate();
+
+            return await _alunoRepository.Update(aluno);
         }
 
-        public Task<List<Aluno>> GetAllAluno()
+        public async Task<int> CreateAluno(Aluno entity)
         {
-            throw new NotImplementedException();
+            return await _alunoRepository.Insert(entity);
         }
 
-        public Task<bool> InactivateAlunoById(int id)
+        public async Task<List<Aluno>> GetAllAluno()
         {
-            throw new NotImplementedException();
+            IEnumerable<Aluno> alunos = await _alunoRepository.GetAll();
+            return alunos.ToList();
         }
 
-        public Task<bool> UpdateAluno(Aluno entity)
+        public async Task<Aluno> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _alunoRepository.GetById(id);
+        }
+
+        public async Task<bool> InactivateAlunoById(int id)
+        {
+            Aluno aluno = await _alunoRepository.GetById(id);
+
+            if (aluno == null)
+            {
+                throw new CustomException("Aluno não encontrado");
+            }
+            aluno.Inactivate();
+
+            return await _alunoRepository.Update(aluno);
+        }
+
+        public async Task<bool> UpdateAluno(Aluno entity)
+        {
+            Aluno aluno = await _alunoRepository.GetById(entity.Id);
+
+            if (aluno == null)
+            {
+                throw new CustomException("Aluno não encontrado");
+            }
+
+            entity.Id = aluno.Id;
+            entity.Inativo = entity.Inativo;
+
+            return await _alunoRepository.Update(entity);
         }
     }
 }

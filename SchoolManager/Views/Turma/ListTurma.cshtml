@@ -15,6 +15,12 @@
         <tr>
             <th>
                 <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.Id)
+
+                </p>
+            </th>
+            <th>
+                <p class="text-capitalize">
                     @Html.DisplayNameFor(model => model.CursoId)
                 </p>
             </th>
@@ -30,18 +36,16 @@
 
                 </p>
             </th>
-            <th>
-                <p class="text-capitalize">
-                    @Html.DisplayNameFor(model => model.Id)
 
-                </p>
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (Turma item in Model) {
         <tr>
+                <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
                 <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
                     @Html.DisplayFor(modelItem => item.CursoId)
                 </td>
@@ -50,9 +54,6 @@
                 </td>
                 <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
                     @Html.DisplayFor(modelItem => item.Ano)
-                </td>
-                <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
-                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 @if (!item.Inativo)
                 {

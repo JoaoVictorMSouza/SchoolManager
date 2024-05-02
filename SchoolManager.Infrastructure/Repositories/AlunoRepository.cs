@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using SchoolManager.Domain.Entities;
 using SchoolManager.Domain.Interface.Repository;
+using System.Data.SqlClient;
 
 namespace SchoolManager.Infrastructure.Repositories
 {
@@ -13,24 +15,125 @@ namespace SchoolManager.Infrastructure.Repositories
             _connectionString = configuration.GetConnectionString("Connection")!;
         }
 
-        public Task<IEnumerable<Aluno>> GetAll()
+        public async Task<IEnumerable<Aluno>> GetAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<Aluno> alunos;
+
+            using (var con = new SqlConnection(_connectionString))
+            {
+                var query = @" 
+                    SELECT
+                        *
+                    FROM ALUNO;
+                ";
+
+                var result = await con.QueryAsync<dynamic>(query);
+
+                alunos = result.Select(item => new Aluno
+                {
+                    Id = item.id,
+                    Nome = item.nome,
+                    Usuario = item.usuario,
+                    Senha = item.senha,
+                    Inativo = item.inativo != 0
+                });
+            };
+
+            return alunos;
         }
 
-        public Task<Aluno> GetById(int id)
+        public async Task<Aluno> GetById(int id)
         {
-            throw new NotImplementedException();
+            Aluno aluno;
+
+            var prm = new DynamicParameters();
+            prm.Add("@id", id);
+
+            using (var con = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                    SELECT
+                        *
+                    FROM ALUNO
+                    WHERE
+                        id = @id;
+                ";
+
+                var result = await con.QueryAsync<dynamic>(query, prm);
+
+                aluno = result.Select(item => new Aluno
+                {
+                    Id = item.id,
+                    Nome = item.nome,
+                    Usuario = item.usuario,
+                    Senha = item.senha,
+                    Inativo = item.inativo != 0
+                }).FirstOrDefault()!;
+            };
+
+            return aluno;
         }
 
-        public Task<int> Insert(Aluno entity)
+        public async Task<int> Insert(Aluno entity)
         {
-            throw new NotImplementedException();
+            int result = 0;
+
+            var prm = new DynamicParameters();
+            prm.Add("@nome", entity.Nome);
+            prm.Add("@usuario", entity.Usuario);
+            prm.Add("@senha", entity.Senha);
+            prm.Add("@inativo", entity.Inativo);
+
+            using (var con = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                    INSERT INTO ALUNO (nome, usuario, senha, inativo)
+                    VALUES (
+                        @nome,
+                        @usuario,
+                        @senha,
+                        @inativo
+                    );
+
+                    SELECT CAST(SCOPE_IDENTITY() as int);
+                ";
+
+                result = await con.ExecuteScalarAsync<int>(query, prm);
+            };
+
+            return result;
         }
 
-        public Task<bool> Update(Aluno entity)
+        public async Task<bool> Update(Aluno entity)
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            var prm = new DynamicParameters();
+            prm.Add("@id", entity.Id);
+            prm.Add("@nome", entity.Nome);
+            prm.Add("@usuario", entity.Usuario);
+            prm.Add("@senha", entity.Senha);
+            prm.Add("@inativo", entity.Inativo);
+
+            using (var con = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                    UPDATE ALUNO
+                    SET
+                        nome = @nome,
+                        usuario = @usuario,
+                        senha = @senha,
+                        inativo = @inativo
+                    WHERE
+                        id = @id;
+                ";
+
+                var exec = await con.ExecuteAsync(query, prm);
+
+                result = (exec > 0);
+            }
+
+            return result;
         }
     }
 }
