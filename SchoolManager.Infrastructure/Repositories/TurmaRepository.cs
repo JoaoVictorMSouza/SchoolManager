@@ -75,6 +75,38 @@ namespace SchoolManager.Infrastructure.Repositories
             return turma;
         }
 
+        public async Task<Turma?> GetByName(string turmaNome)
+        {
+            Turma turma;
+
+            var prm = new DynamicParameters();
+            prm.Add("@turma", turmaNome);
+
+            using (var con = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                    SELECT
+                        *
+                    FROM TURMA
+                    WHERE
+                        turma = @turma;
+                ";
+
+                var result = await con.QueryAsync<dynamic>(query, prm);
+
+                turma = result.Select(item => new Turma
+                {
+                    Id = item.id,
+                    CursoId = item.curso_id,
+                    TurmaNome = item.turma,
+                    Ano = item.ano,
+                    Inativo = item.inativo != 0
+                }).FirstOrDefault()!;
+            };
+
+            return turma;
+        }
+
         public async Task<int> Insert(Turma entity)
         {
             int result = 0;

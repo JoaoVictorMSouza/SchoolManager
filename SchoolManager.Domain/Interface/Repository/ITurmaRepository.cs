@@ -5,5 +5,6 @@ namespace SchoolManager.Domain.Interface.Repository
 {
     public interface ITurmaRepository : IRepository<Turma>
     {
+        Task<Turma?> GetByName(string turmaNome);
     }
 }

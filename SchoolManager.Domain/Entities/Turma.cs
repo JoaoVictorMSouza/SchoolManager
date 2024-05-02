@@ -1,4 +1,5 @@
 ﻿using SchoolManager.Domain.Entities.Base;
+using SchoolManager.Domain.Entities.Exception;
 
 namespace SchoolManager.Domain.Entities
 {
@@ -16,6 +17,22 @@ namespace SchoolManager.Domain.Entities
         public void Activate()
         {
             Inativo = false;
+        }
+
+        public void ValidateName(string name)
+        {
+            if (name == this.TurmaNome)
+            {
+                throw new CustomException("Já existe uma turma com este nome");
+            }
+        }
+
+        public void ValidateYear()
+        {
+            if (this.Ano < DateTime.Now.Year)
+            {
+                throw new CustomException("Não é possível incluír turmas para datas anteriores à data atual");
+            }
         }
     }
 }

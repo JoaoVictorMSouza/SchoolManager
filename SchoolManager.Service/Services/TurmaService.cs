@@ -13,6 +13,15 @@ namespace SchoolManager.Service.Services
         }
         public async Task<int> CreateTurma(Turma entity)
         {
+            entity.ValidateYear();
+
+            Turma? turma = await _turmaRepository.GetByName(entity.TurmaNome);
+
+            if (turma != null)
+            {
+                entity.ValidateName(turma.TurmaNome);
+            }
+
             return await _turmaRepository.Insert(entity);
         }
 
@@ -66,6 +75,15 @@ namespace SchoolManager.Service.Services
 
             entity.Id = turma.Id;
             entity.Inativo = entity.Inativo;
+
+            entity.ValidateYear();
+
+            Turma? turmaFind = await _turmaRepository.GetByName(entity.TurmaNome);
+
+            if (turmaFind != null && turmaFind.Id != entity.Id)
+            {
+                entity.ValidateName(turmaFind.TurmaNome);
+            }
 
             return await _turmaRepository.Update(entity);
         }

@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManager.Service", "Sc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SchoolManager.Service", "SchoolManager.Service", "{FD43F1FF-6B0C-40B0-B92C-6B72DCB41453}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SchoolManager.UnitTests", "SchoolManager.UnitTests", "{B283163A-0809-461C-B628-A27802D1A8B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolManager.UnitTests", "SchoolManager.UnitTests\SchoolManager.UnitTests.csproj", "{3762267F-DC35-46E7-8F88-CD4BEE50E344}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{BD41562C-DB5D-478D-8484-935E4E3DA850}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD41562C-DB5D-478D-8484-935E4E3DA850}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD41562C-DB5D-478D-8484-935E4E3DA850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3762267F-DC35-46E7-8F88-CD4BEE50E344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3762267F-DC35-46E7-8F88-CD4BEE50E344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3762267F-DC35-46E7-8F88-CD4BEE50E344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3762267F-DC35-46E7-8F88-CD4BEE50E344}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{FE7AF92E-2C8C-4113-8BF1-25B392F30A4D} = {2DDDD2E6-80BB-4156-8201-ED6813E36CA0}
 		{5D3AD87E-FA96-4793-9765-540FAE0898B2} = {D7FE1AA5-5F97-4662-9B07-2E868256DE1E}
 		{BD41562C-DB5D-478D-8484-935E4E3DA850} = {FD43F1FF-6B0C-40B0-B92C-6B72DCB41453}
+		{3762267F-DC35-46E7-8F88-CD4BEE50E344} = {B283163A-0809-461C-B628-A27802D1A8B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {416E0A28-F987-490A-A3A1-DA3587725A7D}
