@@ -1,13 +1,14 @@
-﻿@model IEnumerable<SchoolManager.Domain.Entities.Aluno>
+﻿@using SchoolManager.Domain.Entities
+@model IEnumerable<SchoolManager.Domain.Entities.Aluno>
 
 @{
     ViewData["Title"] = "ListAluno";
 }
 
-<h1>Listagem de Alunos</h1>
+<h1>Consulta de Alunos</h1>
 
 <p>
-    <a asp-action="CreateAlunoView">Inserir novo aluno</a>
+    <a asp-action="CreateAlunoView">Inserir aluno</a>
 </p>
 <table class="table">
     <thead>
@@ -19,22 +20,22 @@
             </th>
             <th>
                 <p class="text-capitalize">
-                    @Html.DisplayNameFor(model => model.nome)
+                    @Html.DisplayNameFor(model => model.Nome)
                 </p>
             </th>
             <th>
                 <p class="text-capitalize">
-                    @Html.DisplayNameFor(model => model.usuario)
+                    @Html.DisplayNameFor(model => model.Usuario)
                 </p>
             </th>
             <th>
                 <p class="text-capitalize">
-                    @Html.DisplayNameFor(model => model.senha)
+                    @Html.DisplayNameFor(model => model.Senha)
                 </p>
             </th>
             <th>
                 <p class="text-capitalize">
-                    @Html.DisplayNameFor(model => model.inativo)
+                    @Html.DisplayNameFor(model => model.Inativo)
                 </p>
             </th>
 
@@ -42,21 +43,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (Aluno item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.nome)
+            <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                @Html.DisplayFor(modelItem => item.Nome)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.usuario)
+            <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                @Html.DisplayFor(modelItem => item.Usuario)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.senha)
+            <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                @Html.DisplayFor(modelItem => item.Senha)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.inativo)
+            <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                @Html.DisplayFor(modelItem => item.Inativo)
             </td>
-            <td>
+            <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>

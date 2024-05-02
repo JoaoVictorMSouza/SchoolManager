@@ -1,58 +1,75 @@
-﻿@model IEnumerable<SchoolManager.Domain.Entities.Turma>
+﻿@using SchoolManager.Domain.Entities
+@model IEnumerable<SchoolManager.Domain.Entities.Turma>
 
 @{
     ViewData["Title"] = "ListTurma";
 }
 
-<h1>ListTurma</h1>
+<h1>Consulta de turmas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateTurmaView">Inserir turma</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.cursoId)
+                <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.CursoId)
+                </p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.turma)
+                <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.TurmaNome)
+
+                </p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ano)
+                <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.Ano)
+
+                </p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.inativo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
+                <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.Id)
+
+                </p>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (Turma item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.cursoId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.turma)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ano)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.inativo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+                <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                    @Html.DisplayFor(modelItem => item.CursoId)
+                </td>
+                <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                    @Html.DisplayFor(modelItem => item.TurmaNome)
+                </td>
+                <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                    @Html.DisplayFor(modelItem => item.Ano)
+                </td>
+                <td class="@(item.Inativo ? "text-decoration-line-through" : "")">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                @if (!item.Inativo)
+                {
+                    <td>
+                        @Html.ActionLink("Editar", "UpdateTurmaView", new { id = item.Id }) |
+                        @Html.ActionLink("Inativar", "InactivateTurmaView", new { id = item.Id })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <form asp-action="ActivateTurma" asp-controller="Turma" method="post">
+                            <input type="hidden" name="id" value="@item.Id" asp-route-id="@item.Id"/>
+                            <button type="submit" class="btn btn-primary">Ativar</button>
+                        </form>
+                    </td>
+                }
         </tr>
 }
     </tbody>

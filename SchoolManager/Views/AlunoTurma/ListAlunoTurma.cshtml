@@ -1,13 +1,14 @@
-﻿@model IEnumerable<SchoolManager.Domain.Entities.AlunoTurma>
+﻿@using SchoolManager.Domain.Entities
+@model IEnumerable<SchoolManager.Domain.Entities.AlunoTurma>
 
 @{
     ViewData["Title"] = "ListAlunoTurma";
 }
 
-<h1>ListAlunoTurma</h1>
+<h1>Consulta de relacionamentos aluno-turma</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Inserir relacionamento aluno-turma</a>
 </p>
 <table class="table">
     <thead>
@@ -19,13 +20,13 @@
                 @Html.DisplayNameFor(model => model.TurmaId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.inativo)
+                @Html.DisplayNameFor(model => model.Inativo)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (AlunoTurma item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.AlunoId)
@@ -34,7 +35,7 @@
                 @Html.DisplayFor(modelItem => item.TurmaId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.inativo)
+                @Html.DisplayFor(modelItem => item.Inativo)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

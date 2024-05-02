@@ -1,0 +1,47 @@
+﻿@model SchoolManager.Domain.Entities.Turma
+
+@{
+    ViewData["Title"] = "CreateTurma";
+}
+
+<h1>Inserir turma</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateTurma" asp-controller="Turma" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CursoId" class="control-label"></label>
+                <input asp-for="CursoId" class="form-control" />
+                <span asp-validation-for="CursoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TurmaNome" class="control-label"></label>
+                <input asp-for="TurmaNome" class="form-control" />
+                <span asp-validation-for="TurmaNome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ano" class="control-label"></label>
+                <input asp-for="Ano" class="form-control" />
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check d-none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Inativo" type="hidden" value="false" />
+                </label>
+            </div>
+            <div class="form-group mt-4">
+                <input type="submit" value="Inserir" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListTurma">Voltar para a listagem</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

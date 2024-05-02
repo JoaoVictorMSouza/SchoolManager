@@ -4,9 +4,9 @@ namespace SchoolManager.Domain.Entities
 {
     public class Aluno : BaseEntity
     {
-        public string nome { get; set; }
-        public string usuario { get; set; }
-        public string senha { get; set; }
-        public bool inativo { get; set; }
+        public string Nome { get; set; }
+        public string Usuario { get; set; }
+        public string Senha { get; set; }
+        public bool Inativo { get; set; }
     }
 }

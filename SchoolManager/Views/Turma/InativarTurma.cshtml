@@ -1,0 +1,73 @@
+﻿@model SchoolManager.Domain.Entities.Turma
+
+@{
+    ViewData["Title"] = "InativarTurma";
+}
+
+<h1>Inativar turma</h1>
+
+<hr />
+<div class="row w-100">
+    <div>
+        <p>Deseja realmente inativar esse registro?</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.CursoId)
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.TurmaNome)
+
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Ano)
+
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Id)
+
+                        </p>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Model.CursoId
+                    </td>
+                    <td>
+                        @Model.TurmaNome
+                    </td>
+                    <td>
+                        @Model.Ano
+                    </td>
+                    <td>
+                        @Model.Id
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex">
+            <form asp-action="InactivateTurma" asp-controller="Turma" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-danger">Inativar</button>
+            </form>
+            <div class="mx-2">
+                <a class="btn btn-primary" asp-action="ListTurma" asp-controller="Turma">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

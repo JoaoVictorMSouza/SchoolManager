@@ -18,6 +18,11 @@ namespace SchoolManager.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<Aluno> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<int> Insert(Aluno entity)
         {
             throw new NotImplementedException();

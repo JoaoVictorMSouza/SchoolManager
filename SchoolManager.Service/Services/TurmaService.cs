@@ -1,4 +1,5 @@
 ﻿using SchoolManager.Domain.Entities;
+using SchoolManager.Domain.Entities.Exception;
 using SchoolManager.Domain.Interface.Repository;
 
 namespace SchoolManager.Service.Services
@@ -10,24 +11,63 @@ namespace SchoolManager.Service.Services
         {
             _turmaRepository = turmaRepository;
         }
-        public Task<int> CreateTurma(Turma entity)
+        public async Task<int> CreateTurma(Turma entity)
         {
-            throw new NotImplementedException();
+            return await _turmaRepository.Insert(entity);
         }
 
-        public Task<List<Aluno>> GetAllTurma()
+        public async Task<List<Turma>> GetAllTurma()
         {
-            throw new NotImplementedException();
+            IEnumerable<Turma> turmas = await _turmaRepository.GetAll();
+            return turmas.ToList();
         }
 
-        public Task<bool> InactivateTurmaById(int id)
+        public async Task<Turma> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _turmaRepository.GetById(id);
         }
 
-        public Task<bool> UpdateTurma(Turma entity)
+        public async Task<bool> InactivateTurmaById(int id)
         {
-            throw new NotImplementedException();
+            Turma turma = await _turmaRepository.GetById(id);
+
+            if (turma == null)
+            {
+                throw new CustomException("Turma não encontrada");
+            }
+
+            turma.Inactivate();
+
+            return await _turmaRepository.Update(turma);
+        }
+
+        public async Task<bool> ActivateTurmaById(int id)
+        {
+            Turma turma = await _turmaRepository.GetById(id);
+
+            if (turma == null)
+            {
+                throw new CustomException("Turma não encontrada");
+            }
+
+            turma.Activate();
+
+            return await _turmaRepository.Update(turma);
+        }
+
+        public async Task<bool> UpdateTurma(Turma entity)
+        {
+            Turma turma = await _turmaRepository.GetById(entity.Id);
+
+            if (turma == null)
+            {
+                throw new CustomException("Turma não encontrada");
+            }
+
+            entity.Id = turma.Id;
+            entity.Inativo = entity.Inativo;
+
+            return await _turmaRepository.Update(entity);
         }
     }
 }
