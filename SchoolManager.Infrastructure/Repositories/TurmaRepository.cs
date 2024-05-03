@@ -43,7 +43,7 @@ namespace SchoolManager.Infrastructure.Repositories
             return turmas;
         }
 
-        public async Task<Turma> GetById(int id)
+        public async Task<Turma> GetByIdTurma(int id)
         {
             Turma turma;
 

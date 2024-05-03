@@ -6,5 +6,6 @@ namespace SchoolManager.Domain.Interface.Repository
     public interface IAlunoRepository : IRepository<Aluno>
     {
         Task<Aluno> GetByIdWithPassword(int id);
+        Task<Aluno> GetByIdAluno(int id);
     }
 }

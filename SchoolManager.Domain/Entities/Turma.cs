@@ -1,11 +1,15 @@
 ﻿using SchoolManager.Domain.Entities.Base;
 using SchoolManager.Domain.Entities.Exception;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolManager.Domain.Entities
 {
     public class Turma : BaseEntity
     {
+        [Display(Name = "ID Curso")]
         public int CursoId { get; set; }
+
+        [Display(Name = "Nome")]
         public string TurmaNome { get; set; }
         public int Ano { get; set; }
         public bool Inativo { get; set; }

@@ -1,0 +1,65 @@
+﻿@using SchoolManager.Domain.Entities
+@model Tuple<List<AlunoTurma>, List<Turma>>
+
+@{
+    ViewData["Title"] = "CreateAlunoTurma";
+    List<SelectListItem> turmaSelectItems = Model.Item2.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TurmaNome }).ToList();
+}
+
+<h1>Inserir aluno-turma</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAlunoTurma">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Item1.FirstOrDefault().TurmaId, "Turma")
+                @Html.DropDownList("turmaId", turmaSelectItems, "Selecione a turma", new { @class = "form-control", id = "turmaDropdown", name = "turmaId" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Item1.FirstOrDefault().AlunoId, "Aluno")
+                @Html.DropDownList("alunoId", new List<SelectListItem>(), "Selecione o aluno", new { @class = "form-control", id = "alunoDropdown", @disabled = "disabled", name = "alunoId" })
+            </div>
+
+            <div class="form-group form-check d-none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Item1.FirstOrDefault().Inativo" type="hidden" value="false" />
+                </label>
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Inserir" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListAlunoTurma">Voltar para a listagem</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#turmaDropdown').change(function() {
+                var turmaId = $(this).val();
+                if (turmaId != '') {
+                    $.getJSON('@Url.Action("GetAlunosByTurma", "AlunoTurma")', { turmaId: turmaId }, function(data) {
+                        var alunoDropdown = $('#alunoDropdown');
+                        alunoDropdown.empty();
+                        alunoDropdown.append($('<option></option>').val('').text('Selecione o aluno'));
+                        $.each(data, function(i, aluno) {
+                            alunoDropdown.append($('<option></option>').val(aluno.id).text(aluno.nome));
+                        });
+                        alunoDropdown.prop('disabled', false);
+                    });
+                } else {
+                    $('#alunoDropdown').empty().prop('disabled', true);
+                }
+            });
+        });
+    </script>
+}

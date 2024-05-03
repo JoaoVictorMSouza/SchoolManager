@@ -16,7 +16,7 @@ namespace SchoolManager.Service.Services
 
         public async Task<bool> ActivateAlunoById(int id)
         {
-            Aluno aluno = await _alunoRepository.GetById(id);
+            Aluno aluno = await _alunoRepository.GetByIdAluno(id);
 
             if (aluno == null)
             {
@@ -48,14 +48,14 @@ namespace SchoolManager.Service.Services
 
         public async Task<Aluno> GetById(int id)
         {
-            Aluno aluno = await _alunoRepository.GetById(id);
+            Aluno aluno = await _alunoRepository.GetByIdAluno(id);
             aluno.Senha = aluno.Senha.MaskString();
             return aluno;
         }
 
         public async Task<bool> InactivateAlunoById(int id)
         {
-            Aluno aluno = await _alunoRepository.GetById(id);
+            Aluno aluno = await _alunoRepository.GetByIdAluno(id);
 
             if (aluno == null)
             {

@@ -3,46 +3,132 @@
 
 @{
     ViewData["Title"] = "ListAlunoTurma";
+
+    List<IGrouping<int, AlunoTurma>> turmaAgrupado = Model.GroupBy(x => x.TurmaId).ToList();
 }
 
 <h1>Consulta de relacionamentos aluno-turma</h1>
 
 <p>
-    <a asp-action="Create">Inserir relacionamento aluno-turma</a>
+    <a asp-action="CreateAlunoTurmaView">Inserir relacionamento aluno-turma</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AlunoId)
+                <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.TurmaId)
+                </p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TurmaId)
+                <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.Turma.CursoId)
+                </p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Inativo)
+                <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.Turma.TurmaNome)
+                </p>
             </th>
+            <th>
+                <p class="text-capitalize">
+                    @Html.DisplayNameFor(model => model.Turma.Ano)
+                </p>
+            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (AlunoTurma item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AlunoId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TurmaId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inativo)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (IGrouping<int, AlunoTurma> item in turmaAgrupado)
+        {
+            Turma turma = Model.FirstOrDefault(x => x.TurmaId == item.Key)?.Turma;
+            List<Aluno> alunos = Model.Where(x => x.TurmaId == item.Key).Select(x => x.Aluno).ToList();
+            if (turma != null)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => turma.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => turma.CursoId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => turma.TurmaNome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => turma.Ano)
+                    </td>
+                    <td>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <p class="text-capitalize">
+                                            @Html.DisplayNameFor(model => model.AlunoId)
+                                        </p>
+                                    </th>
+                                    <th>
+                                        <p class="text-capitalize">
+                                            @Html.DisplayNameFor(model => model.Aluno.Nome)
+                                        </p>
+                                    </th>
+                                    <th>
+                                        <p class="text-capitalize">
+                                            @Html.DisplayNameFor(model => model.Aluno.Usuario)
+                                        </p>
+                                    </th>
+                                    <th>
+                                        <p class="text-capitalize">
+                                            @Html.DisplayNameFor(model => model.Aluno.Senha)
+                                        </p>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Aluno itemAluno in alunos)
+                                {
+                                    AlunoTurma alunoTurma = Model.FirstOrDefault(x => x.TurmaId == turma.Id && x.AlunoId ==
+                                    itemAluno.Id);
+                                    <tr>
+                                        <td class="@(alunoTurma.Inativo ? "text-decoration-line-through" : "")">
+                                            @Html.DisplayFor(modelItem => itemAluno.Id)
+                                        </td>
+                                        <td class="@(alunoTurma.Inativo ? "text-decoration-line-through" : "")">
+                                            @Html.DisplayFor(modelItem => itemAluno.Nome)
+                                        </td>
+                                        <td class="@(alunoTurma.Inativo ? "text-decoration-line-through" : "")">
+                                            @Html.DisplayFor(modelItem => itemAluno.Usuario)
+                                        </td>
+                                        <td class="@(alunoTurma.Inativo ? "text-decoration-line-through" : "")">
+                                            @Html.DisplayFor(modelItem => itemAluno.Senha)
+                                        </td>
+                                        @if (!alunoTurma.Inativo)
+                                        {
+                                            <td>
+                                                @Html.ActionLink("Editar", "UpdateAlunoTurmaView", new { idTurma = turma.Id, idAluno = itemAluno.Id }) |
+                                                @Html.ActionLink("Inativar", "InactivateAlunoTurmaView", new { idTurma = turma.Id, idAluno = itemAluno.Id })
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <form asp-action="ActivateAlunoTurma" asp-controller="AlunoTurma" method="post">
+                                                    <input type="hidden" name="idTurma" value="@turma.Id" />
+                                                    <input type="hidden" name="idAluno" value="@itemAluno.Id" />
+                                                    <button type="submit" class="btn btn-primary">Ativar</button>
+                                                </form>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+
+        }
     </tbody>
 </table>

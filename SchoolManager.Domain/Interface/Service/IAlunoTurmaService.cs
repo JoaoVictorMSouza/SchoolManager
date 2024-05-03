@@ -6,7 +6,10 @@ namespace SchoolManager.Domain.Interface.Repository
     {
         Task<int> CreateAlunoTurma(AlunoTurma entity);
         Task<bool> UpdateAlunoTurma(AlunoTurma entity);
-        Task<List<Aluno>> GetAllAlunoTurma();
-        Task<bool> InactivateAlunoTurmaById(int id);
+        Task<List<AlunoTurma>> GetAllAlunoTurma();
+        Task<bool> InactivateAlunoTurmaByIdTurmaAndIdAluno(int idTurma, int idAluno);
+        Task<bool> ActivateAlunoTurmaByIdTurmaAndIdAluno(int idTurma, int idAluno);
+        Task<AlunoTurma> GetByIdTurmaAndIdAluno(int idTurma, int idAluno);
+        Task<List<Aluno>> GetAlunosByTurma(int turmaId);
     }
 }

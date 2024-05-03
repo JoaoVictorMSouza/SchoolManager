@@ -5,8 +5,6 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 IServiceCollection services = builder.Services;
 
-services.AddControllersWithViews();
-
 //Registrando os servi�os
 services.ApiRegister();
 

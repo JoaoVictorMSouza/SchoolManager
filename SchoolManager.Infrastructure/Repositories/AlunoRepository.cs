@@ -42,7 +42,7 @@ namespace SchoolManager.Infrastructure.Repositories
             return alunos;
         }
 
-        public async Task<Aluno> GetById(int id)
+        public async Task<Aluno> GetByIdAluno(int id)
         {
             Aluno aluno;
 

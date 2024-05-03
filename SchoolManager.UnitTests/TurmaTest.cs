@@ -34,7 +34,7 @@ namespace SchoolManager.UnitTests
             };
 
             _mockTurmaRepository.Setup(repo => repo.GetByName(It.Is<string>(x => x == "Turma 1"))).ReturnsAsync(turma1);
-            _mockTurmaRepository.Setup(repo => repo.GetById(It.Is<int>(x => x == 2))).ReturnsAsync(turma2);
+            _mockTurmaRepository.Setup(repo => repo.GetByIdTurma(It.Is<int>(x => x == 2))).ReturnsAsync(turma2);
 
             _turmaService = new TurmaService(_mockTurmaRepository.Object);
         }

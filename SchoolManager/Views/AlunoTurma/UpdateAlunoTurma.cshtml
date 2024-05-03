@@ -1,0 +1,63 @@
+﻿@using SchoolManager.Domain.Entities
+@model Tuple<AlunoTurma, List<Turma>>
+
+@{
+    ViewData["Title"] = "UpdateAlunoTurma";
+    List<SelectListItem> turmaSelectItems = Model.Item2.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TurmaNome }).ToList();
+}
+
+<h1>Alterar aluno-turma</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateAlunoTurma">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Item1.AlunoId" class="control-label"></label>
+                <input asp-for="@Model.Item1.AlunoId" class="form-control" disabled />
+                <input class="form-check-input" asp-for="@Model.Item1.Aluno.Usuario" type="hidden" value="@Model.Item1.AlunoId" name="alunoId" />
+                <span asp-validation-for="Item1.AlunoId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Item1.Aluno.Nome" class="control-label"></label>
+                <input asp-for="@Model.Item1.Aluno.Nome" class="form-control" disabled />
+                <span asp-validation-for="@Model.Item1.Aluno.Nome" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Item1.Aluno.Usuario" class="control-label"></label>
+                <input asp-for="@Model.Item1.Aluno.Usuario" class="form-control" disabled />
+                <span asp-validation-for="@Model.Item1.Aluno.Usuario" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Item1.TurmaId, "Turma")
+                @Html.DropDownList("turmaId", turmaSelectItems, "Selecione a turma", new { @class = "form-control", id = "turmaDropdown", name = "turmaId" })
+            </div>
+
+            <div class="form-group form-check d-none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.Item1.Inativo" type="hidden" value="false" />
+                </label>
+            </div>
+
+            <div class="form-group form-check d-none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.Item1.TurmaId" type="hidden" value="@Model.Item1.TurmaId" name="turmaAntigaId" />
+                </label>
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Inserir" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListAlunoTurma">Voltar para a listagem</a>
+</div>

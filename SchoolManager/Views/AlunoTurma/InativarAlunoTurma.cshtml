@@ -1,0 +1,116 @@
+﻿@model SchoolManager.Domain.Entities.AlunoTurma
+
+@{
+    ViewData["Title"] = "Inativarmodel.Aluno";
+}
+
+<h1>Inativar aluno-turma</h1>
+
+<hr />
+<div class="row w-100">
+    <div>
+        <p>Deseja realmente inativar esse registro?</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.TurmaId)
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Turma.CursoId)
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Turma.TurmaNome)
+                        </p>
+                    </th>
+                    <th>
+                        <p class="text-capitalize">
+                            @Html.DisplayNameFor(model => model.Turma.Ano)
+                        </p>
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>
+                            @Model.Turma.Id
+                        </td>
+                        <td>
+                            @Model.Turma.CursoId
+                        </td>
+                        <td>
+                            @Model.Turma.TurmaNome
+                        </td>
+                        <td>
+                            @Model.Turma.Ano
+                        </td>
+                        <td>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <p class="text-capitalize">
+                                                @Html.DisplayNameFor(model => model.AlunoId)
+                                            </p>
+                                        </th>
+                                        <th>
+                                            <p class="text-capitalize">
+                                                @Html.DisplayNameFor(model => model.Aluno.Nome)
+                                            </p>
+                                        </th>
+                                        <th>
+                                            <p class="text-capitalize">
+                                                @Html.DisplayNameFor(model => model.Aluno.Usuario)
+                                            </p>
+                                        </th>
+                                        <th>
+                                            <p class="text-capitalize">
+                                                @Html.DisplayNameFor(model => model.Aluno.Senha)
+                                            </p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                @Model.Aluno.Id
+                                            </td>
+                                            <td>
+                                                @Model.Aluno.Nome
+                                            </td>
+                                            <td>
+                                                @Model.Aluno.Usuario
+                                            </td>
+                                            <td>
+                                                @Model.Aluno.Senha
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <div class="d-flex">
+            <form asp-action="InactivateAlunoTurma" asp-controller="AlunoTurma" method="post">
+                <input type="hidden" name="idTurma" value="@Model.TurmaId" />
+                <input type="hidden" name="idAluno" value="@Model.AlunoId" />
+                <button type="submit" class="btn btn-danger">Inativar</button>
+            </form>
+            <div class="mx-2">
+                <a class="btn btn-primary" asp-action="ListTurma" asp-controller="Turma">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

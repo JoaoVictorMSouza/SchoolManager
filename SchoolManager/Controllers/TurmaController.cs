@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SchoolManager.Domain.Entities;
 using SchoolManager.Domain.Interface.Repository;
+using SchoolManager.Service.Services;
 
 namespace SchoolManager.Application.Controllers
 {
@@ -28,6 +29,11 @@ namespace SchoolManager.Application.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTurma(Turma turma)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("CreateTurma", turma);
+            }
+
             await _turmaService.CreateTurma(turma);
             return RedirectToAction("ListTurma");
         }
@@ -42,6 +48,11 @@ namespace SchoolManager.Application.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTurma(Turma turma)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("UpdateTurma", turma);
+            }
+
             await _turmaService.UpdateTurma(turma);
             return RedirectToAction("ListTurma");
         }

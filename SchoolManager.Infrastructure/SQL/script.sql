@@ -29,7 +29,6 @@ CREATE TABLE ALUNO_TURMA(
     aluno_id INT NOT NULL,
     turma_id INT NOT NULL,
     inativo TINYINT NOT NULL,
-    CONSTRAINT aluno_turma_aluno_id_primary PRIMARY KEY(aluno_id),
     CONSTRAINT aluno_turma_turma_id_foreign FOREIGN KEY(turma_id) REFERENCES TURMA(id),
     CONSTRAINT aluno_turma_aluno_id_foreign FOREIGN KEY(aluno_id) REFERENCES ALUNO(id)
 );

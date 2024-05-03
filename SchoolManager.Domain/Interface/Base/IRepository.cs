@@ -5,6 +5,5 @@
         Task<int> Insert(T entity);
         Task<bool> Update(T entity);
         Task<IEnumerable<T>> GetAll();
-        Task<T> GetById(int id);
     }
 }

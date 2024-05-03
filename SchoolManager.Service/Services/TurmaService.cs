@@ -33,12 +33,12 @@ namespace SchoolManager.Service.Services
 
         public async Task<Turma> GetById(int id)
         {
-            return await _turmaRepository.GetById(id);
+            return await _turmaRepository.GetByIdTurma(id);
         }
 
         public async Task<bool> InactivateTurmaById(int id)
         {
-            Turma turma = await _turmaRepository.GetById(id);
+            Turma turma = await _turmaRepository.GetByIdTurma(id);
 
             if (turma == null)
             {
@@ -52,7 +52,7 @@ namespace SchoolManager.Service.Services
 
         public async Task<bool> ActivateTurmaById(int id)
         {
-            Turma turma = await _turmaRepository.GetById(id);
+            Turma turma = await _turmaRepository.GetByIdTurma(id);
 
             if (turma == null)
             {
@@ -66,7 +66,7 @@ namespace SchoolManager.Service.Services
 
         public async Task<bool> UpdateTurma(Turma entity)
         {
-            Turma turma = await _turmaRepository.GetById(entity.Id);
+            Turma turma = await _turmaRepository.GetByIdTurma(entity.Id);
 
             if (turma == null)
             {

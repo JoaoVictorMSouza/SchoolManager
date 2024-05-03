@@ -48,5 +48,21 @@ namespace SchoolManager.Domain.Entities
                 throw new CustomException("Por favor, insira uma senha mais forte.");
             }
         }
+
+        public bool IsAPasswordStrong()
+        {
+            Regex regex = new Regex("\\W");
+
+            if (this.Senha.Length < 6
+                || !this.Senha.Any(char.IsUpper)
+                || !this.Senha.Any(char.IsLower)
+                || !this.Senha.Any(char.IsDigit)
+                || !regex.IsMatch(this.Senha))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

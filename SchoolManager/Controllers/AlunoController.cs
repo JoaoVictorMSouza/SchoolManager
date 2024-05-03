@@ -28,6 +28,11 @@ namespace SchoolManager.Application.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAluno(Aluno aluno)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("CreateAluno", aluno);
+            }
+
             await _alunoService.CreateAluno(aluno);
             return RedirectToAction("ListAluno");
         }
@@ -42,6 +47,11 @@ namespace SchoolManager.Application.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateAluno(Aluno aluno)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("UpdateAluno", aluno);
+            }
+
             await _alunoService.UpdateAluno(aluno);
             return RedirectToAction("ListAluno");
         }

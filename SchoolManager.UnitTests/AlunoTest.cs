@@ -20,11 +20,21 @@ namespace SchoolManager.UnitTests
                 Id = 1,
                 Nome = "Aluno 1",
                 Usuario = "Aluno 1",
-                Senha = "kiozCMaFazWrTsGq08pEJA==:VYh1lteIGKGWu/qAN2L3Mqb6ys1lfVUjLnawrtfsf88=",
+                Senha = "nWIkrcikgTykQ8zfYtU1Ww==:riCxzrZ6P7ItsOcZUjJ3k+1hi3GNEJ7VtmW",
                 Inativo = false
             };
 
-            _mockAlunoRepository.Setup(repo => repo.GetById(It.Is<int>(x => x == 1))).ReturnsAsync(aluno1);
+            Aluno aluno2 = new Aluno()
+            {
+                Id = 2,
+                Nome = "Aluno 2",
+                Usuario = "Aluno 2",
+                Senha = "nWIkrcikgTykQ8zfYtU1Ww==:riCxzrZ6P7ItsOcZUjJ3k+1hi3GNEJ7VtmW",
+                Inativo = false
+            };
+
+            _mockAlunoRepository.Setup(repo => repo.GetByIdWithPassword(It.Is<int>(x => x == 1))).ReturnsAsync(aluno1);
+            _mockAlunoRepository.Setup(repo => repo.GetByIdAluno(It.Is<int>(x => x == 2))).ReturnsAsync(aluno1);
 
             _alunoService = new AlunoService(_mockAlunoRepository.Object);
         }
@@ -79,7 +89,7 @@ namespace SchoolManager.UnitTests
         }
 
         [Fact]
-        public async void UpdateAlunodifferentPasswordSuccess()
+        public async void UpdateAlunodifferentPasswordError()
         {
             Aluno updateAluno = new Aluno()
             {
@@ -90,7 +100,9 @@ namespace SchoolManager.UnitTests
                 Inativo = false
             };
 
-            await _alunoService.UpdateAluno(updateAluno);
+            CustomException? curtomException = await Assert.ThrowsAsync<CustomException>(async () => await _alunoService.UpdateAluno(updateAluno));
+
+            Assert.Equal("Senha inválida.", curtomException.Message);
         }
 
         [Fact]
